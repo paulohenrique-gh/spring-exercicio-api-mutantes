@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -27,6 +28,16 @@ public class MutantController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mutantService.addMutant(mutantDto));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Mutant>> getMutants() {
+        return ResponseEntity.status(HttpStatus.OK).body(mutantService.findAll());
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Mutant> getMutant(@PathVariable UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(mutantService.findById(id));
     }
 
     @GetMapping("{id}/enemies-defeated-summary")
@@ -49,10 +60,15 @@ public class MutantController {
         return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
     }
 
-    @PutMapping("{id}/check-in")
+    @PatchMapping("{id}/check-in")
     public ResponseEntity<Mutant> checkIn(@PathVariable UUID id) {
         Mutant mutant = mutantService.checkInById(id);
         return ResponseEntity.status(HttpStatus.OK).body(mutant);
+    }
+
+    @GetMapping("/checked-in")
+    public ResponseEntity<List<Mutant>> getCheckedInMutants() {
+        return ResponseEntity.status(HttpStatus.OK).body(mutantService.findCheckedInMutants());
     }
 
     private ResponseEntity<Object> getUnauthorizedResponse() {

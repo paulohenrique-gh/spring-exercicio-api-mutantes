@@ -7,6 +7,7 @@ import org.example.devsapi.repositories.MutantRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,6 +33,10 @@ public class MutantService {
         return mutantRepository.save(mutant);
     }
 
+    public List<Mutant> findAll() {
+        return mutantRepository.findAll();
+    }
+
     public Mutant findById(UUID id) {
         return mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
     }
@@ -41,7 +46,11 @@ public class MutantService {
         if (!mutant.getIsCheckedIn()) {
             mutant.setIsCheckedIn(true);
         }
-        return mutant;
+        return mutantRepository.save(mutant);
+    }
+
+    public List<Mutant> findCheckedInMutants() {
+        return mutantRepository.findCheckedInMutants();
     }
 
     private Integer getTotalAliensFromTotalEnemies(Integer totalEnemiesDefeated) {
