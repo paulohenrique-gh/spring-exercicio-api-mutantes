@@ -36,6 +36,14 @@ public class MutantService {
         return mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
     }
 
+    public Mutant checkInById(UUID id) {
+        Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
+        if (!mutant.getIsCheckedIn()) {
+            mutant.setIsCheckedIn(true);
+        }
+        return mutant;
+    }
+
     private Integer getTotalAliensFromTotalEnemies(Integer totalEnemiesDefeated) {
         return Math.toIntExact(Math.round(totalEnemiesDefeated * AVERAGE_ALIENS_DEFEATED_PERCENTAGE));
     }

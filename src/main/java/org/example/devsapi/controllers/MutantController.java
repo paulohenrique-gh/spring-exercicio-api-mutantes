@@ -49,6 +49,12 @@ public class MutantController {
         return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
     }
 
+    @PutMapping("{id}/check-in")
+    public ResponseEntity<Mutant> checkIn(@PathVariable UUID id) {
+        Mutant mutant = mutantService.checkInById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mutant);
+    }
+
     private ResponseEntity<Object> getUnauthorizedResponse() {
         Map<String, String> responseMsg = new HashMap<>();
         responseMsg.put("error", "Invalid password");

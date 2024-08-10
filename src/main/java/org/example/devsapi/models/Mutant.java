@@ -35,5 +35,5 @@ public class Mutant {
 
     private Boolean isEligibleForEspada = false;
 
-    private Boolean isInSchool = false;
+    private Boolean isCheckedIn = false;
 }
