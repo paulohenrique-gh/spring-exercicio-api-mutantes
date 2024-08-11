@@ -1,6 +1,7 @@
 package org.example.devsapi.services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.devsapi.data.MutantConstants;
 import org.example.devsapi.dtos.MutantDto;
 import org.example.devsapi.models.Mutant;
 import org.example.devsapi.repositories.MutantRepository;
@@ -15,20 +16,17 @@ import java.util.UUID;
 public class MutantService {
 
     private final MutantRepository mutantRepository;
-    private final String PASSWORD = "apocalipse";
-    private final double AVERAGE_ALIENS_DEFEATED_PERCENTAGE = .268;
-    private final double AVERAGE_DEMONS_DEFEATED_PERCENTAGE = .432;
-    private final int MIN_ALIENS_DEFEATED_ELIGIBILITY = 20;
+    private final MutantConstants mutantConstants;
 
     public boolean authenticate(String password) {
-        return password.equals(PASSWORD);
+        return password.equals(mutantConstants.getPassword());
     }
 
     public Mutant addMutant(MutantDto mutantDto) {
         Mutant mutant = new Mutant() ;
         mutant.setAliensDefeated(getTotalAliensFromTotalEnemies(mutantDto.enemiesDefeated()));
         mutant.setDemonsDefeated(getTotalDemonsFromTotalEnemies(mutantDto.enemiesDefeated()));
-        mutant.setIsEligibleForEspada(mutant.getAliensDefeated() > MIN_ALIENS_DEFEATED_ELIGIBILITY);
+        mutant.setIsEligibleForEspada(mutant.getAliensDefeated() > mutantConstants.getMinAliensDefeatedEligibility());
         BeanUtils.copyProperties(mutantDto, mutant, "password", "enemiesDefeated");
         return mutantRepository.save(mutant);
     }
@@ -68,10 +66,10 @@ public class MutantService {
     }
 
     private Integer getTotalAliensFromTotalEnemies(Integer totalEnemiesDefeated) {
-        return Math.toIntExact(Math.round(totalEnemiesDefeated * AVERAGE_ALIENS_DEFEATED_PERCENTAGE));
+        return Math.toIntExact(Math.round(totalEnemiesDefeated * mutantConstants.getAverageAliensDefeatedPercentage()));
     }
 
     private Integer getTotalDemonsFromTotalEnemies(Integer totalEnemiesDefeated) {
-        return Math.toIntExact(Math.round(totalEnemiesDefeated * AVERAGE_DEMONS_DEFEATED_PERCENTAGE));
+        return Math.toIntExact(Math.round(totalEnemiesDefeated * mutantConstants.getAverageDemonsDefeatedPercentage()));
     }
 }

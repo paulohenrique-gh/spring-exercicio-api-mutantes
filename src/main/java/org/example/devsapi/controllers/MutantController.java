@@ -1,6 +1,5 @@
 package org.example.devsapi.controllers;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.devsapi.dtos.MutantDto;
@@ -81,7 +80,7 @@ public class MutantController {
         return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
     }
 
-    @GetMapping("/checked-in")
+    @GetMapping("checked-in")
     public ResponseEntity<List<Mutant>> getCheckedInMutants() {
         return ResponseEntity.status(HttpStatus.OK).body(mutantService.findCheckedInMutants());
     }
