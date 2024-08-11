@@ -45,8 +45,18 @@ public class MutantService {
         Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
         if (!mutant.getIsCheckedIn()) {
             mutant.setIsCheckedIn(true);
+            return mutantRepository.save(mutant);
         }
-        return mutantRepository.save(mutant);
+        return mutant;
+    }
+
+    public Mutant checkOutById(UUID id) {
+        Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
+        if (mutant.getIsCheckedIn()) {
+            mutant.setIsCheckedIn(false);
+            return mutantRepository.save(mutant);
+        }
+        return mutant;
     }
 
     public List<Mutant> findCheckedInMutants() {

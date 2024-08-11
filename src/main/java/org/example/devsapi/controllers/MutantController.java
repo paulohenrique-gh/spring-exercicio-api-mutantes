@@ -66,6 +66,12 @@ public class MutantController {
         return ResponseEntity.status(HttpStatus.OK).body(mutant);
     }
 
+    @PatchMapping("{id}/check-out")
+    public ResponseEntity<Mutant> checkOut(@PathVariable UUID id) {
+        Mutant mutant = mutantService.checkOutById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(mutant);
+    }
+
     @GetMapping("/checked-in")
     public ResponseEntity<List<Mutant>> getCheckedInMutants() {
         return ResponseEntity.status(HttpStatus.OK).body(mutantService.findCheckedInMutants());
