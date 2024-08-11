@@ -46,7 +46,7 @@ public class MutantExceptionHandler {
     public ResponseEntity<Map<String, String>> handleInvalidPasswordException(InvalidPasswordException ex){
         Map<String, String> map = new HashMap<>();
         map.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(map);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(map);
     }
 }
 
