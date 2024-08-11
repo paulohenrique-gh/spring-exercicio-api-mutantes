@@ -3,6 +3,8 @@ package org.example.devsapi.services;
 import lombok.RequiredArgsConstructor;
 import org.example.devsapi.data.MutantConstants;
 import org.example.devsapi.dtos.MutantDto;
+import org.example.devsapi.exceptions.InvalidPasswordException;
+import org.example.devsapi.exceptions.MutantNotFoundException;
 import org.example.devsapi.models.Mutant;
 import org.example.devsapi.repositories.MutantRepository;
 import org.springframework.beans.BeanUtils;
@@ -18,8 +20,10 @@ public class MutantService {
     private final MutantRepository mutantRepository;
     private final MutantConstants mutantConstants;
 
-    public boolean authenticate(String password) {
-        return password.equals(mutantConstants.getPassword());
+    public void authenticate(String password) {
+        if (!password.equals(mutantConstants.getPassword())) {
+            throw new InvalidPasswordException();
+        }
     }
 
     public Mutant addMutant(MutantDto mutantDto) {
@@ -36,11 +40,11 @@ public class MutantService {
     }
 
     public Mutant findById(UUID id) {
-        return mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
+        return mutantRepository.findById(id).orElseThrow(() -> new MutantNotFoundException(id));
     }
 
     public Mutant checkInById(UUID id) {
-        Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
+        Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new MutantNotFoundException(id));
         if (!mutant.getIsCheckedIn()) {
             mutant.setIsCheckedIn(true);
             return mutantRepository.save(mutant);
@@ -49,7 +53,7 @@ public class MutantService {
     }
 
     public Mutant checkOutById(UUID id) {
-        Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new RuntimeException("Mutant not found"));
+        Mutant mutant = mutantRepository.findById(id).orElseThrow(() -> new MutantNotFoundException(id));
         if (mutant.getIsCheckedIn()) {
             mutant.setIsCheckedIn(false);
             return mutantRepository.save(mutant);

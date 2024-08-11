@@ -22,10 +22,8 @@ public class MutantController {
     private final MutantService mutantService;
 
     @PostMapping
-    public ResponseEntity<Object> addMutant(@RequestBody @Valid MutantDto mutantDto) {
-        if (!mutantService.authenticate(mutantDto.password())) {
-            return getUnauthorizedResponse();
-        }
+    public ResponseEntity<Object> addMutant(@Valid @RequestBody MutantDto mutantDto) {
+        mutantService.authenticate(mutantDto.password());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mutantService.addMutant(mutantDto));
     }
@@ -83,11 +81,5 @@ public class MutantController {
     @GetMapping("checked-in")
     public ResponseEntity<List<Mutant>> getCheckedInMutants() {
         return ResponseEntity.status(HttpStatus.OK).body(mutantService.findCheckedInMutants());
-    }
-
-    private ResponseEntity<Object> getUnauthorizedResponse() {
-        Map<String, String> responseMsg = new HashMap<>();
-        responseMsg.put("error", "Invalid password");
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseMsg);
     }
 }
