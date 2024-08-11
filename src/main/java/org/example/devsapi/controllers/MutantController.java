@@ -1,5 +1,6 @@
 package org.example.devsapi.controllers;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.devsapi.dtos.MutantDto;
@@ -70,6 +71,14 @@ public class MutantController {
     public ResponseEntity<Mutant> checkOut(@PathVariable UUID id) {
         Mutant mutant = mutantService.checkOutById(id);
         return ResponseEntity.status(HttpStatus.OK).body(mutant);
+    }
+
+    @GetMapping("checked-in-count")
+    public ResponseEntity<Map<String, Integer>> getCheckedInMutantsCount() {
+        Map<String, Integer> responseMsg = new HashMap<>();
+        Integer mutantsCheckedInCount = mutantService.getCheckedInCount();
+        responseMsg.put("mutantsCheckedInCount", mutantsCheckedInCount);
+        return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
     }
 
     @GetMapping("/checked-in")

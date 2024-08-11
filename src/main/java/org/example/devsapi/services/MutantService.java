@@ -60,7 +60,11 @@ public class MutantService {
     }
 
     public List<Mutant> findCheckedInMutants() {
-        return mutantRepository.findCheckedInMutants();
+        return mutantRepository.findMutantByIsCheckedInIsTrue();
+    }
+
+    public Integer getCheckedInCount() {
+        return mutantRepository.countMutantsByIsCheckedInIsTrue();
     }
 
     private Integer getTotalAliensFromTotalEnemies(Integer totalEnemiesDefeated) {

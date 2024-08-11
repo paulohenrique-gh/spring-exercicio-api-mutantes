@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
 public interface MutantRepository extends JpaRepository<Mutant, UUID> {
 
-    @Query("SELECT m FROM Mutant m WHERE m.isCheckedIn = true ")
-    List<Mutant> findCheckedInMutants();
+    List<Mutant> findMutantByIsCheckedInIsTrue();
+
+    Integer countMutantsByIsCheckedInIsTrue();
 }
