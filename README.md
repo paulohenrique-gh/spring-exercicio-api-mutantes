@@ -23,3 +23,61 @@
 - A API deve ter um endpoint que retorne quantos mutantes estão na escola.
 - A API deve ter um endpoint que informe quais mutantes estão na escola, dica:
   pode utilizar um atributo booleano.
+
+## Endpoints
+Para testar os endpoints, acessar http://localhost:8080/swagger-ui/index.html
+
+```bash
+POST /mutants
+```
+Descrição: cadastra mutante
+
+---
+```bash
+GET /mutants
+```
+Descrição: retorna lista de mutantes
+
+---
+```bash
+GET /mutants/checked-in
+```
+Descrição: retorna lista de mutantes atualmente na escola
+
+---
+```bash
+GET /mutants/checked-in-count
+```
+Descrição: retorna número de mutantes atualmente na escola
+
+---
+```bash
+GET /mutants/{id}
+```
+Descrição: retorna mutante de acordo com id informado
+
+---
+```bash
+PATCH /mutants/{id}/check-in
+```
+Descrição: registra entrada do mutante na escola
+
+---
+```bash
+PATCH /mutants/{{id}}/check-out
+```
+Descrição: registra saída do mutante da escola
+
+---
+```bash
+GET /mutants/{id}/enemies-defeated-summary
+```
+Descrição: resumo de inimigos derrotados de acordo com o id do mutante informado. 
+Se o mutante derrotou mais de 20 alienígenas, o corpo da resposta tem uma mensagem informando que ele foi convocado
+para a organização E.S.P.A.D.A
+
+---
+```bash
+GET /mutants/{{id}}/espada-eligibility
+```
+Descrição: informa se mutante é elegível para a E.S.P.A.D.A
