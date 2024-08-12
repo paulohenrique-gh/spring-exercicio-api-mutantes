@@ -64,7 +64,7 @@ Descrição: registra entrada do mutante na escola
 
 ---
 ```bash
-PATCH /mutants/{{id}}/check-out
+PATCH /mutants/{id}/check-out
 ```
 Descrição: registra saída do mutante da escola
 
