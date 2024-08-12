@@ -78,6 +78,6 @@ para a organização E.S.P.A.D.A
 
 ---
 ```bash
-GET /mutants/{{id}}/espada-eligibility
+GET /mutants/{id}/espada-eligibility
 ```
 Descrição: informa se mutante é elegível para a E.S.P.A.D.A
